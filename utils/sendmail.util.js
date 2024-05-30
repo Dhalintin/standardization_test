@@ -1,4 +1,7 @@
 const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 async function sendEmail(email, emailMessage) {
     const transporter = nodemailer.createTransport({
@@ -7,7 +10,7 @@ async function sendEmail(email, emailMessage) {
         secure: false,
         auth: {
             user: 'apikey',
-            pass: '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',
+            pass: env.process.MAILPASSWORD,
         },
     });
 
