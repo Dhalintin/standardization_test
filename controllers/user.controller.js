@@ -1,9 +1,8 @@
 const UserService = require('../services/user.service');
 const OtpService = require('../services/otp.service');
-const mongoose = require('mongoose');
-const argon2 = require('argon2');
+const ApikeyService = require('../services/apikey.service');
 const sendMail = require('../utils/sendmail.util')
-const generateToken = require('../utils/generateotp.util');
+const generate = require('../utils/generate.util');
 const Redis  = require('../services/redis.service');
 
 
@@ -70,7 +69,7 @@ class UserController {
                 })
             }
 
-            const otp = generateToken.generateOTP();
+            const otp = generate.generateOTP();
             const emailMessage = `<h3>Please use this OTP to login ${otp}. </h3><h4>Note this token will expire in 5 mins</h4>`
 
             try{
@@ -106,7 +105,35 @@ class UserController {
     }
 
     async verifyEmail(req, res){
+        try{
+            const { email, otp } = req.body;
+            const existingUser = await UserService.getuser(email);
+            const existingOtp = await OtpService.verifyOtp(existingUser._id, otp);
+            if(!existingOtp){
+                return res.status(401).json({
+                    success: false,
+                    message: "Wrong or expired OTP"
+                })
+            }
 
+            //Give them API KEY
+            const apiKey = generate.generateApiKey();
+            const newApikey = await ApikeyService.storeApiKey(apiKey, existingUser._id);
+            await OtpService.deleteOtp(existingOtp._id);
+            return res.status(200).json({
+                success: true,
+                message: `Successful! Here's your api key ${apiKey}. Please store it.`,
+                data: newApikey
+            })
+            
+            
+        }catch(error){
+            return res.status(401).json({
+                success: false,
+                message: error.message
+            })
+
+        }
     }
 
     async deleteUser(req, res){
