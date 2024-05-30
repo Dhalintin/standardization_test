@@ -1,8 +1,8 @@
-const { registrationSchemaValidation } = require('../validations/user.validation');
+const { userSchemaValidation } = require('../validations/user.validation');
 
 
 module.exports = (req, res, next) => {
-    const { error } = registrationSchemaValidation.validate(req.body);
+    const { error } = userSchemaValidation.validate(req.body);
     if(error){
         let errorMessage = error.message.replace(/"/g, '');
         errorMessage = errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1);
