@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 
-const userRoute = require('./routes/user.route')
+const userRoute = require('./routes/user.route');
+const uploadRoute = require('./routes/upload.route');
+
 
 dotenv.config();
 
@@ -25,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/v1/user', userRoute);
+app.use('/api/v1/upload', uploadRoute);
 
 
 const port =  3000
