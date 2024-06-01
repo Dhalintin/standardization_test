@@ -8,7 +8,17 @@ const upload = multer({
     dest: 'uploads/'
 });
 
+//Uploading an image
 router.post('/image', upload.single('image'), imageValidator, controller.imageUpload);
+
+// View all uploaded images by a specific user
+router.get('/view-images', controller.viewAllImages);
+
+// View a specific Image
+router.get('/view-image/:id', controller.viewImage);
+
+// Deleting an imgage
+router.delete('/delete/:id', controller.deleteImage);
 
 
 module.exports = router;
