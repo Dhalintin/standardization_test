@@ -36,7 +36,7 @@ class UserController {
                 })
             }
 
-            const link = 'https://krypton.onrender.com/api/v1/user/login';
+            const link = 'https://standardization-test.onrender.com/api/v1/user/login';
             const emailMessage = `<h2>Welcome to Krypton Secure</h2>
             <p>You have successful registered on Krypton Secure. Please proceed to link in on <a href="${link}">${link}</a></p>`;
 
