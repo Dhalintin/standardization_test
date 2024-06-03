@@ -5,12 +5,12 @@ dotenv.config();
 
 async function sendEmail(email, emailMessage) {
     const transporter = nodemailer.createTransport({
-        host: 'smtp.sendgrid.net',
-        port: 587,
+        host: 'smtp.elasticemail.com',
+        port: 2525,
         secure: false,
         auth: {
-            user: process.env.MAILUSERNAME,
-            pass: process.env.MAILPASSWORD,
+            user: process.env.EMAILUSERNAME,
+            pass: process.env.EMAILPASSWORD,
         },
     });
 

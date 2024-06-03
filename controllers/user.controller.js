@@ -52,9 +52,9 @@ class UserController {
             
             return res.status(200).json({
                 success: true,
-                message: `Your registration is complete!
-                Check your inbox for instructions on how to get started with Krypton Secure.
-                Tip:  If you don't see our email, be sure to check your spam folder and mark it as "not spam" to ensure you receive future updates.`,
+                message: `<h1>Your registration is complete!</h1>
+                <p>Check your inbox for instructions on how to get started with Krypton Secure.</p>
+                <h4>Tip:  If you don't see our email, be sure to check your spam folder and mark it as "not spam" to ensure you receive future updates.</h4>`,
                 data: newUser
             })
 
@@ -94,7 +94,7 @@ class UserController {
             });
             
             const otp = generate.generateOTP();
-            const emailMessage = `<h3>Please use this OTP to login ${otp}. </h3><h4>Note this token will expire in 5 mins</h4>`
+            const emailMessage = `<h3>Please use this OTP to login ${otp} using this link: <a href="https://standardization-test.onrender.com/api/v1/user/verify-email">https://standardization-test.onrender.com/api/v1/user/verify-email</a>. </h3><h4>Note this token will expire in 5 mins</h4>`
 
             const userId = user._id;
             await OtpService.storeOtp(otp, userId);
