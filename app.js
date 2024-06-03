@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 
 const userRoute = require('./routes/user.route');
-const uploadRoute = require('./routes/upload.route');
+const imageRoute = require('./routes/image.route');
 
 
 dotenv.config();
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/v1/user', userRoute);
-app.use('/api/v1/upload', uploadRoute);
+app.use('/api/v1/image', imageRoute);
 
 
 const port =  3000

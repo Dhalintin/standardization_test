@@ -9,7 +9,7 @@ const upload = multer({
 });
 
 //Uploading an image
-router.post('/image', upload.single('image'), imageValidator, controller.imageUpload);
+router.post('/upload', upload.single('image'), imageValidator, controller.imageUpload);
 
 // View all uploaded images by a specific user
 router.get('/view-images', controller.viewAllImages);

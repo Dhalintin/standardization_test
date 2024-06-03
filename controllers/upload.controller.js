@@ -5,9 +5,11 @@ const ImageUtil = require('../utils/image.util')
 
 class UploadController{
 
-    // Uploading an Image
+    // Uploading an Image with API key
     async imageUpload(req, res){
         const image = req.file;
+
+        // Extract API key from Header
         req.apiKey = req.headers['x-api-key']; 
         const userApikey = req.apiKey
 
@@ -23,6 +25,7 @@ class UploadController{
             const userId = existingApikey.userId;
             const { filename, size } = image;
 
+            // Read the Image file to convert to Base64 String
             const filePath = image.path;
             fs.readFile(filePath, async (err, data) => {
                 if (err) {
@@ -32,10 +35,13 @@ class UploadController{
                     });
                 }
           
+                // Convert to Base64 String
                 const imageData = data.toString('base64');
 
+                // Store Image as Base64 String
                 const newImage = await ImageService.storeImage(userId, imageData, filename, size);
 
+                // Delete Image
                 const isDeleted = ImageUtil.deleteImage(filePath);
 
                 if(!isDeleted){
@@ -65,7 +71,9 @@ class UploadController{
     // View all uploaded image for a user
     async viewAllImages(req, res){
         try{
-            const userApikey = req.headers.authorization?.split(' ')[1];
+            // Extract API key from Header
+            req.apiKey = req.headers['x-api-key']; 
+            const userApikey = req.apiKey
 
             if(!userApikey){
                 return res.status(400).json({
@@ -83,6 +91,7 @@ class UploadController{
                 })
             }
 
+            // Find Images uploaded by User with The API key
             const userId = existingApikey.userId;
             const images = ImageService.findImages(userId);
 
@@ -91,6 +100,7 @@ class UploadController{
                 message: "Successful!",
                 data: images
             })
+
         }catch(error){
             return res.status(200).json({
                 success: false,
@@ -102,6 +112,17 @@ class UploadController{
 
     // Viewing a specific image
     async viewImage(req, res){
+        // Extract API key from Header
+        req.apiKey = req.headers['x-api-key']; 
+        const userApikey = req.apiKey
+
+        if(!userApikey){
+            return res.status(400).json({
+                success: false,
+                message: "No ApiKey found"
+            })
+        }
+        
         const imageId = req.params.id
 
         if(!imageId){
@@ -112,6 +133,7 @@ class UploadController{
         }
 
         try{
+            // Finding the Image
             const existingImage = await ImageService.findImage(imageId);
             if(!existingImage){
                 return res.status(400).json({
@@ -135,6 +157,16 @@ class UploadController{
 
     // Delete an Image
     async deleteImage(req, res){
+        req.apiKey = req.headers['x-api-key']; 
+        const userApikey = req.apiKey
+
+        if(!userApikey){
+            return res.status(400).json({
+                success: false,
+                message: "No ApiKey found"
+            })
+        }
+        
         const imageId = req.params.id
 
         if(!imageId){
