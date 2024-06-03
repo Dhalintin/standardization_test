@@ -1,5 +1,7 @@
 # KRYPTON SECURE
 
+## You can also view this documentation in here [docs](#features)
+
 KRYPTON SECURE is a backend system for the Krypton app. This app handles user registration with email confirmation, two-factor authentication (2FA) for login, secure image uploads, and access control using API keys.
 
 ## Table of Contents
@@ -34,8 +36,8 @@ KRYPTON SECURE is a backend system for the Krypton app. This app handles user re
 
 - **Backend Framework:** Node.js with Express
 - **Database:** MongoDB
-- **Email Service:** SendGrid
-- **Caching:** Redis or in-memory storage for OTP
+- **Email Service:** Elastic Email
+- **Caching:** Database
 - **File Handling:** Multer (for file uploads)
 
 ## Setup and Installation
@@ -68,14 +70,11 @@ KRYPTON SECURE is a backend system for the Krypton app. This app handles user re
 Create a `.env` file in the root directory with the following variables:
 
 ```env
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017/kryptoniteapp
-JWT_SECRET=your_jwt_secret
+MONGODB_URI=your_mongo_db_uri
+JWT_SECRET=your_jwt_secret_key
 REDIS_URL=redis://localhost:6379
-PORT=5790;
-MAILPASSWORD=sendgridpassword
-MAILUSERNAME=sendgrid username
-SERVER=smtp.sendgrid.net
+EMAILPASSWORD=elastic_email_password
+EMAILUSERNAME=elastic_emal_username
 ```
 
 ## API Endpoints
@@ -101,7 +100,7 @@ SERVER=smtp.sendgrid.net
   - `email` (string): User's email address.
   - `password` (string): User's password used at registeration.
 
-#### Verify OTP (Step 2)
+#### Verify Email (Step 2)
 
 - **URL:** `/api/v1/user/verify-email`
 - **Method:** `POST`
@@ -114,7 +113,7 @@ SERVER=smtp.sendgrid.net
 
 #### Generate API Key
 
-An API key is automatically generated for the user when the mail is verified and sent to email but if user needs another API key
+An API key is automatically generated for the user when the mail is verified and sent to email but if user needs another API key but if the user needs another API key, users can generate API key
 
 - **URL:** `/api/v1/user/apikey-gen`
 - **Method:** `POST`
