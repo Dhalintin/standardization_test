@@ -94,7 +94,7 @@ class UserController {
             });
             
             const otp = generate.generateOTP();
-            const emailMessage = `<h3>Please use this OTP to login ${otp}. </h3><h4>Note this token will expire in 5 mins</h4>`
+            const emailMessage = `<h3>Please use this OTP to login ${otp} using this link: <a href="https://standardization-test.onrender.com/api/v1/user/verify-email">https://standardization-test.onrender.com/api/v1/user/verify-email</a>. </h3><h4>Note this token will expire in 5 mins</h4>`
 
             const userId = user._id;
             await OtpService.storeOtp(otp, userId);
