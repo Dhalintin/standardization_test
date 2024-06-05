@@ -36,7 +36,7 @@ KRYPTON SECURE is a backend system for the Krypton app. This app handles user re
 
 - **Backend Framework:** Node.js with Express
 - **Database:** MongoDB
-- **Email Service:** Elastic Email
+- **Email Service:** SendGrid
 - **Caching:** Database
 - **File Handling:** Multer (for file uploads)
 
@@ -75,6 +75,8 @@ JWT_SECRET=your_jwt_secret_key
 REDIS_URL=redis://localhost:6379
 EMAILPASSWORD=elastic_email_password
 EMAILUSERNAME=elastic_emal_username
+MAILUSERNAME=sendgrid username
+MAILPASSWORD= send grid password
 ```
 
 ## API Endpoints
